@@ -1,6 +1,8 @@
 node_modules
 .next
 .env
+tsconfig.tsbuildinfo
+next-env.d.ts
 out
 .env.local
 .env*.local
