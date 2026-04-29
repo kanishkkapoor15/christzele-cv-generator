@@ -145,7 +145,9 @@ export async function POST(req: NextRequest) {
         },
       ],
       temperature: 0.35,
-      maxTokens: 5500,
+      // Two-page CV with 6 experience roles needs more token headroom than
+      // a single-page. 7000 covers all roles, bullets, skills and achievements.
+      maxTokens: 7000,
       responseFormat: "json_object",
     });
 

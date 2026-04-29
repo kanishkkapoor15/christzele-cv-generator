@@ -22,11 +22,12 @@ const CVPreview = forwardRef<HTMLDivElement, Props>(function CVPreview(
       style={{
         width: "210mm",
         minHeight: "297mm",
+        maxHeight: "594mm", // two A4 pages max
         padding: "14mm 15mm",
         fontFamily:
           "Inter, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-        fontSize: "10.5pt",
-        lineHeight: 1.35,
+        fontSize: "10pt",
+        lineHeight: 1.3,
         color: "#111",
       }}
     >

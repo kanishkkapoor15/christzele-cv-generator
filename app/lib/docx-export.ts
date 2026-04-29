@@ -32,8 +32,8 @@ const COLOR_HEADING = "000000";
 const COLOR_BODY = "111111";
 const COLOR_MUTED = "555555";
 const COLOR_INVISIBLE = "FFFFFF"; // Pure white — invisible on white page
-// Page margins (A4-like tight layout)
-const MARGIN_INCH = 0.65;
+// Page margins — slightly narrower to give the 2-page layout more room
+const MARGIN_INCH = 0.6;
 
 // ─────────────────────── Helpers ──────────────────────────────────
 

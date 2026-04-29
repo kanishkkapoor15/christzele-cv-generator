@@ -27,16 +27,16 @@ const REPAIR_SYSTEM_PROMPT = `You are a CV editor. The CV below is missing some 
 Your job: weave the missing keywords into the CV naturally. Use them in the EXACT spelling and casing provided. Do not fabricate experience — only reframe what's already there.
 
 PLACEMENT PRIORITY (in this order):
-1. SKILLS section — primary home for technical keywords. Add to the most appropriate existing category. Create a new category ONLY if no existing one fits.
+1. SKILLS section — primary home for operational/domain keywords. Add to the most appropriate existing category. Create a new category ONLY if no existing one fits.
 2. EXPERIENCE BULLETS — rewrite a relevant bullet to include the keyword as part of an action-verb + outcome statement.
-3. PROJECT DESCRIPTIONS — work the keyword into a project description if relevant.
+3. KEY ACHIEVEMENTS (projects) — work the keyword into an achievement description if relevant.
 4. SUMMARY — only the most JD-critical 1-2 keywords if they belong there.
 
 HARD RULES:
-- Do NOT create a "Core Competencies", "Keywords", "Technologies", "ATS Keywords", or any catch-all section.
-- Skills section: ≤ 5 categories, ≤ 7 items per category.
-- Experience: ≤ 3 bullets per role, ≤ 22 words per bullet.
-- Page budget: total content must fit one A4 page.
+- Do NOT create a "Core Competencies", "Keywords", "ATS Keywords", or any catch-all section.
+- Skills section: ≤ 6 categories, ≤ 7 items per category.
+- All 6 experience roles MUST remain in the output — do not drop any.
+- Page budget: total content must fit within two A4 pages.
 - Preserve the existing CV's tone, structure, and quality. Only modify what's needed to incorporate the missing keywords.
 - If a keyword genuinely cannot fit naturally without fabrication, place it in the most relevant Skills category — never invent experience.
 
@@ -73,9 +73,9 @@ Return the complete revised CV JSON now. Raw JSON only.`;
         { role: "user", content: userPrompt },
       ],
       temperature: 0.25, // Lower than first-pass — repair is mechanical, not creative
-      // Repair output ≈ same size as original CV, but no extra reasoning
-      // for keyword discovery (we hand it the exact list). 4500 is comfortable.
-      maxTokens: 4500,
+      // Two-page CV is larger than single-page. 6000 gives comfortable headroom
+      // for all 6 experience roles + skills + achievements without truncation.
+      maxTokens: 6000,
       responseFormat: "json_object",
     });
 
