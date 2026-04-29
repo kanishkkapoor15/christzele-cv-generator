@@ -1,0 +1,12 @@
+node_modules
+.next
+.env
+out
+.env.local
+.env*.local
+*.log
+.DS_Store
+.vercel
+
+# Local-only portfolio index (synced from GitHub; never commit)
+/data/github-portfolio.json
