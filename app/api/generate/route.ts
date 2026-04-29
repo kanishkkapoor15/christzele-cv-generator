@@ -15,10 +15,6 @@ import {
   RoleType,
 } from "@/app/lib/types";
 import {
-  matchProjects,
-  formatPortfolioBlock,
-} from "@/lib/portfolio-matcher";
-import {
   analyzeJD,
   formatKeywordBlock,
   verifyCoverage,
@@ -129,18 +125,6 @@ export async function POST(req: NextRequest) {
     const analysis = analyzeJD(jobDescription, roleType);
     const keywordBlock = formatKeywordBlock(analysis);
 
-    // GitHub Portfolio Intelligence — local keyword overlap, no API call.
-    let portfolioBlock: string | undefined;
-    try {
-      const match = await matchProjects(jobDescription);
-      portfolioBlock = formatPortfolioBlock(match.selected);
-    } catch (e) {
-      console.error(
-        "Portfolio matching failed; falling back to default profile:",
-        e
-      );
-    }
-
     // ── PARALLEL STAGE 1 ──────────────────────────────────────────
     // CV generation and cover letter generation are independent (both only
     // need the JD + profile), so we fire them simultaneously. When the user
@@ -157,7 +141,6 @@ export async function POST(req: NextRequest) {
             allRelevantProjects,
             extraContext,
             keywordBlock,
-            portfolioBlock,
           }),
         },
       ],
