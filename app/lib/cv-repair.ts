@@ -22,26 +22,27 @@
 import { callTensorix, extractJSON } from "./tensorix";
 import { CVData } from "./types";
 
-const REPAIR_SYSTEM_PROMPT = `You are a CV editor. The CV below is missing some essential keywords from the job description that MUST appear in the final document.
+const REPAIR_SYSTEM_PROMPT = `You are a CV editor. The CV below is missing some essential keywords that MUST appear in the final document.
 
-Your job: weave the missing keywords into the CV naturally. Use them in the EXACT spelling and casing provided. Do not fabricate experience — only reframe what's already there.
+Your job: weave each missing keyword into the CV naturally using its EXACT spelling and casing. Do not fabricate experience — only reframe what is already there.
 
-PLACEMENT PRIORITY (in this order):
-1. SKILLS section — primary home for operational/domain keywords. Add to the most appropriate existing category. Create a new category ONLY if no existing one fits.
-2. EXPERIENCE BULLETS — rewrite a relevant bullet to include the keyword as part of an action-verb + outcome statement.
-3. KEY ACHIEVEMENTS (projects) — work the keyword into an achievement description if relevant.
-4. SUMMARY — only the most JD-critical 1-2 keywords if they belong there.
+PLACEMENT PRIORITY:
+1. SKILLS section — most appropriate existing category (create new category only if nothing fits)
+2. EXPERIENCE BULLETS — rewrite a relevant bullet as action-verb + outcome
+3. KEY ACHIEVEMENTS — if the keyword fits an achievement description
+4. SUMMARY — only for the 1–2 most JD-critical keywords
 
 HARD RULES:
-- Do NOT create a "Core Competencies", "Keywords", "ATS Keywords", or any catch-all section.
-- Skills section: ≤ 6 categories, ≤ 7 items per category.
-- All 6 experience roles MUST remain in the output — do not drop any.
-- Page budget: total content must fit within two A4 pages.
-- Preserve the existing CV's tone, structure, and quality. Only modify what's needed to incorporate the missing keywords.
-- If a keyword genuinely cannot fit naturally without fabrication, place it in the most relevant Skills category — never invent experience.
+- Do NOT create "Core Competencies", "Keywords", "ATS Keywords", or any catch-all section.
+- Skills: ≤ 6 categories, ≤ 7 items each.
+- ALL 6 experience roles MUST remain — do not drop or merge any.
+- Minimum bullets per role MUST be preserved: Jollibee ≥5, Mini Mart ≥3, Amazon ≥3, Appco ≥2, Accenture ≥2, Convergys ≥2.
+- Total experience bullets ≥ 17 — if the incoming CV has fewer, ADD bullets (draw from the rich Jollibee duties in the master profile).
+- Page budget: two A4 pages maximum — do not condense into one page.
+- Preserve tone, structure, and quality. Only change what is needed.
+- If a keyword cannot fit naturally, place it in the most relevant Skills category.
 
-OUTPUT:
-Return the COMPLETE updated CV as raw JSON in the same schema. No preamble, no markdown fences, no commentary.`;
+OUTPUT: Return the COMPLETE updated CV as raw JSON in the same schema. No preamble, no markdown, no commentary.`;
 
 /**
  * Fire an LLM repair pass to incorporate missing essential keywords into a CV.
